@@ -15,6 +15,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		97F992E8136E30B70033EB01 /* NetworkListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F992E7136E30B70033EB01 /* NetworkListener.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,8 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* DesktopService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DesktopService-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DesktopService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesktopService.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		97F992E6136E30B70033EB01 /* NetworkListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkListener.h; sourceTree = "<group>"; };
+		97F992E7136E30B70033EB01 /* NetworkListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkListener.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +56,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				97F992E4136E308A0033EB01 /* Model */,
 				018C92B111559ABF003349E5 /* ApplicationController.h */,
 				018C92B211559ABF003349E5 /* ApplicationController.m */,
 				256AC3D80F4B6AC300CF3369 /* DesktopServiceAppDelegate.h */,
@@ -131,6 +135,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		97F992E4136E308A0033EB01 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				97F992E6136E30B70033EB01 /* NetworkListener.h */,
+				97F992E7136E30B70033EB01 /* NetworkListener.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -195,6 +208,7 @@
 				018C92B311559ABF003349E5 /* ApplicationController.m in Sources */,
 				0172F80A11F4461E00AFAB0C /* FractalControl.m in Sources */,
 				0172F83C11F44DFB00AFAB0C /* FractalGenerator.m in Sources */,
+				97F992E8136E30B70033EB01 /* NetworkListener.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
