@@ -12,10 +12,11 @@
 #import "FractalGenerator.h"
 
 @class FractalControl;
-@class ListenService;
+@class NetworkListener;
 
 @interface ApplicationController : NSObject
 {
+    NetworkListener *listener_;
 }
 
 @property (assign) IBOutlet NSWindow*               window;
@@ -27,7 +28,7 @@
 @property (assign) IBOutlet NSButton*               zoomOutButton;
 
 // BONJOUR SERVICE
-
+@property (nonatomic, retain) NetworkListener *listener_;
 - (void) startService;
 - (void) appendStringToLog:(NSString*)logString;
 

@@ -11,6 +11,7 @@
 #import "FractalControl.h"
 #import "FractalGenerator.h"
 #import <mach/mach_time.h>
+#import "NetworkListener.h"
 
 
 // Constants and Globals
@@ -45,7 +46,7 @@
 @synthesize window;
 @synthesize logTextField, fractalControl, progressIndicator;
 @synthesize resetButton, zoomInButton, zoomOutButton;
-//@synthesize listenService;
+@synthesize listener_;
 @synthesize fractalBitmap, startTime;
 @synthesize fractalInProgress;
 
@@ -65,6 +66,9 @@
     [fractalBitmap release];
 	fractalBitmap = nil;
     
+    [listener_ release];
+    listener_ = nil;
+    
 	[super dealloc];	
 }
 
@@ -76,6 +80,14 @@
 {	
 	[self.progressIndicator setHidden:YES];
 	[self generateFractal];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    listener_ = [[NetworkListener alloc] init];
+    
+    NSNotificationCenter *notification_ = [NSNotificationCenter defaultCenter];        
+    [notification_ addObserver:self selector:@selector(appendToLogByObservation:) name:@"NetworkListenerMessage" object:nil];
 }
 
 #pragma mark -
@@ -324,17 +336,17 @@
 	[self.logTextField scrollRangeToVisible:NSMakeRange(lastPosition, 1)];
 }
 
+- (void) appendToLog:(NSDictionary *) logLine
+{
+    [self appendStringToLog:[[logLine objectForKey:@"userInfo"] objectForKey:@"message"]];
+}
+
 - (void) startService
 {
     
-   	NSLog(@"Start Service is not implemented");
+   	NSLog(@"Starting Service");
+	[listener_ startService];
 	
-	[self appendStringToLog:@"Service is not implemented in this project skeleton!"];
-	// HW_TODO :
-	// This project skeleton does not have the listen service implemented
-	// Provide from your own solution for Homework 3
-	// or wait for me to post the solution the HW3 solution
-    
 	return;
 }
 
