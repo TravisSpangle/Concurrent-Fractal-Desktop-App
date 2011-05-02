@@ -17,6 +17,8 @@
 @interface ApplicationController : NSObject
 {
     NetworkListener *listener_;
+    
+    NSMutableArray* generators;
 }
 
 @property (assign) IBOutlet NSWindow*               window;

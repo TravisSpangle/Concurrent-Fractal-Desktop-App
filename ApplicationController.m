@@ -21,9 +21,6 @@
 
 @interface ApplicationController()
 
-
-//@property (retain)   ListenService*      listenService;
-
 @property (retain)   NSBitmapImageRep*   fractalBitmap;
 @property (assign)   uint64_t            startTime;
 @property (assign)   BOOL                fractalInProgress;
@@ -68,6 +65,9 @@
     
     [listener_ release];
     listener_ = nil;
+    
+    [generators release];
+    generators = nil;
     
 	[super dealloc];	
 }
@@ -189,7 +189,14 @@
     
 	// create 1 generator per region
     
-    NSMutableArray* generators = [NSMutableArray arrayWithCapacity:generatorCount];
+    if(!generators){
+        [generators release];
+        generators = nil;
+    }
+    
+    generators = [[NSMutableArray alloc] initWithCapacity:generatorCount];
+    
+   // generators = [NSMutableArray arrayWithCapacity:generatorCount];
     
     for (int i = 0; i < generatorCount; i++)
 	{
@@ -211,6 +218,7 @@
         bitmap = bitmap + (pixelsWide * rowsPerGenerator * 3);
         
         [generators addObject:generator];
+        
     }
     
 
@@ -251,8 +259,20 @@
     //------------------------------------------------------------------------
     
     
-    // execute the generators in order, with no concurreny.
-    // Note that the main thread will block here!
+    
+    //Creating the Queue and then adding the proccessing function to a concurrent thread
+    NSOperationQueue *queue = [[NSOperationQueue new] autorelease];
+    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                            selector:@selector(processFractalConcurrently)
+                                                                              object:nil];
+    
+    [queue addOperation:operation];
+    [operation release];
+    
+        
+}
+
+- (void) processFractalConcurrently{
     
     for ( FractalGenerator* generator in generators)
     {
@@ -260,11 +280,10 @@
     }
     
     // now update everything since we have finsihed rendering the fractal bitmap
-    // this will update the user interface
-    
     [self fractalOperationCompleted];
-    
 }
+
+
 
 - (void) fractalOperationCompleted
 {    
