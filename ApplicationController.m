@@ -115,7 +115,10 @@
 
 - (IBAction) cancelPressed:(id)sender
 {
-	NSLog(@"Stopping");
+    if(queue){
+        [self appendStringToLog:@"Sending Cancel Message"];
+        [queue cancelAllOperations];
+    }
 }
 
 - (IBAction) regionChanged:(id)sender
@@ -267,7 +270,7 @@
     
     
     //Creating the Queue and then adding the proccessing function to a concurrent thread
-    NSOperationQueue *queue = [[NSOperationQueue new] autorelease];
+    queue = [[NSOperationQueue new] autorelease];
     NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
                                                                             selector:@selector(processFractalConcurrently)
                                                                               object:nil];

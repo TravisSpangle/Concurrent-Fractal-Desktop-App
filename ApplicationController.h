@@ -19,6 +19,7 @@
     NetworkListener *listener_;
     
     NSMutableArray* generators;
+    NSOperationQueue *queue;
 }
 
 @property (assign) IBOutlet NSWindow*               window;
