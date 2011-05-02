@@ -26,6 +26,7 @@
 @property (assign) IBOutlet FractalControl*         fractalControl;
 @property (assign) IBOutlet NSProgressIndicator*	progressIndicator;
 @property (assign) IBOutlet NSButton*               resetButton;
+@property (assign) IBOutlet NSButton*               cancelButton;
 @property (assign) IBOutlet NSButton*               zoomInButton;
 @property (assign) IBOutlet NSButton*               zoomOutButton;
 
@@ -40,5 +41,6 @@
 - (IBAction)	zoomInPressed:(id)sender;
 - (IBAction)	zoomOutPressed:(id)sender;
 - (IBAction)	regionChanged:(id)sender;
+- (IBAction)    cancelPressed:(id)sender;
 
 @end

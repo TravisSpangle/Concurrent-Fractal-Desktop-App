@@ -42,7 +42,7 @@
 
 @synthesize window;
 @synthesize logTextField, fractalControl, progressIndicator;
-@synthesize resetButton, zoomInButton, zoomOutButton;
+@synthesize resetButton, zoomInButton, zoomOutButton, cancelButton;
 @synthesize listener_;
 @synthesize fractalBitmap, startTime;
 @synthesize fractalInProgress;
@@ -79,6 +79,7 @@
 -(void) awakeFromNib
 {	
 	[self.progressIndicator setHidden:YES];
+    [self.cancelButton setHidden:YES];
 	[self generateFractal];
 }
 
@@ -110,6 +111,11 @@
 {
 	[self.fractalControl resetToDefaultRegion];
 	[self generateFractal];
+}
+
+- (IBAction) cancelPressed:(id)sender
+{
+	NSLog(@"Stopping");
 }
 
 - (IBAction) regionChanged:(id)sender
@@ -309,6 +315,8 @@
     [self disableControls:inProgress];
     
     [self.progressIndicator setHidden:!inProgress];
+    [self.cancelButton setHidden:!inProgress];
+    
     
     if (inProgress)
         [self.progressIndicator startAnimation:nil];
