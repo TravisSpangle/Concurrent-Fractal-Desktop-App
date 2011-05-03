@@ -300,7 +300,7 @@
         [workerQueue addOperation:operation];
         [operation release];
     }
-    z
+
     [workerQueue waitUntilAllOperationsAreFinished];
     
     [self fractalOperationCompleted];
