@@ -69,6 +69,12 @@
     [generators release];
     generators = nil;
     
+    [queue release];
+    queue = nil;
+    
+    [workerQueue release];
+    workerQueue = nil;
+    
 	[super dealloc];	
 }
 
@@ -115,9 +121,9 @@
 
 - (IBAction) cancelPressed:(id)sender
 {
-    if(queue){
+    if(workerQueue){
         [self appendStringToLog:@"Sending Cancel Message"];
-        [queue cancelAllOperations];
+        [workerQueue cancelAllOperations];
     }
 }
 
@@ -172,7 +178,6 @@
     NSUInteger generatorCount   = pixelsHigh;
         
     // Create the image rep the threaded generators will draw into
-	
 	[self.fractalBitmap release];
     self. fractalBitmap = [[NSBitmapImageRep alloc] 
 						    initWithBitmapDataPlanes:NULL
@@ -267,14 +272,11 @@
     //   if you do the bonus work, you can handle this better
     //------------------------------------------------------------------------
     
-    
-    
     //Creating the Queue and then adding the proccessing function to a concurrent thread
     queue = [[NSOperationQueue new] autorelease];
     NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
                                                                             selector:@selector(processFractalConcurrently)
                                                                               object:nil];
-    
     [queue addOperation:operation];
     [operation release];
     
@@ -283,16 +285,27 @@
 
 - (void) processFractalConcurrently{
     
-    for ( FractalGenerator* generator in generators)
-    {
-        [generator fill];
+    if(!workerQueue){
+        [workerQueue release];
+        workerQueue = nil;
     }
     
-    // now update everything since we have finsihed rendering the fractal bitmap
+    workerQueue = [NSOperationQueue new];
+
+    for ( FractalGenerator* generator in generators)
+    {
+        NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:generator
+                                                                                selector:@selector(fill)
+                                                                                  object:nil];
+        [workerQueue addOperation:operation];
+        [operation release];
+    }
+    z
+    [workerQueue waitUntilAllOperationsAreFinished];
+    
     [self fractalOperationCompleted];
+
 }
-
-
 
 - (void) fractalOperationCompleted
 {    

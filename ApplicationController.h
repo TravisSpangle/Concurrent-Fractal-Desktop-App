@@ -20,6 +20,7 @@
     
     NSMutableArray* generators;
     NSOperationQueue *queue;
+    NSOperationQueue *workerQueue;
 }
 
 @property (assign) IBOutlet NSWindow*               window;
